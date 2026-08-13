@@ -6,19 +6,24 @@ sistem SOP & reminder tugasan automatik untuk staf bisnes kecil di Malaysia.
 Bahasa: Bahasa Melayu (`lang="ms"`). Tiada dependency runtime, tiada font/CDN luar —
 semua CSS & JS inline supaya first paint pantas dan Core Web Vitals kekal elok.
 
+Domain: **https://sopstaf.dynopro.my**
+
 ## Struktur
 
 ```
-index.html          Landing page penuh (CSS + JS inline)
-robots.txt          Benarkan semua crawler + rujukan sitemap
-sitemap.xml         Satu URL
-site.webmanifest    Metadata PWA + ikon
-icons/logo.svg      Logo vektor (sumber untuk semua ikon PNG)
-icons/*.png         Ikon 192 / 512 / apple-touch, dijana dari logo.svg
-img/og.png          Kad kongsi sosial 1200x630 (WhatsApp / FB / X)
-tools/render.js     Jana semula ikon + kad OG (Playwright + Chromium)
-tools/og.html       Sumber reka bentuk kad OG
-tools/verify.js     Semakan SEO + ujian fungsi demo + screenshot
+index.html                  Landing page penuh (CSS + JS inline)
+robots.txt                  Benarkan semua crawler + rujukan sitemap
+sitemap.xml                 Satu URL
+site.webmanifest            Metadata PWA + ikon
+
+icons/icon-192.png          Logo DYNO — sumber, jangan tulis ganti
+icons/icon-512.png          Logo DYNO — sumber, jangan tulis ganti
+icons/apple-touch-icon.png  Dijana dari icon-512 (180px, atas latar jenama)
+img/og.png                  Dijana — kad kongsi sosial 1200x630
+
+tools/render.js             Jana semula apple-touch-icon + kad OG
+tools/og.html               Sumber reka bentuk kad OG
+tools/verify.js             Semakan SEO + ujian fungsi demo + screenshot
 ```
 
 ## Preview lokal
@@ -27,30 +32,18 @@ tools/verify.js     Semakan SEO + ujian fungsi demo + screenshot
 npx http-server . -p 8080     # buka http://localhost:8080
 ```
 
-## Sebelum launch
+## Jana semula aset
 
-**Domain** sudah ditetapkan kepada `https://sopstaf.dynopro.my` — canonical, Open Graph,
-Twitter Card, JSON-LD, `robots.txt` dan `sitemap.xml` semua menunjuk ke situ. Kalau
-bertukar kemudian, ganti sekali gus:
-
-```bash
-grep -rl 'sopstaf\.dynopro\.my' index.html robots.txt sitemap.xml \
-  | xargs sed -i 's|https://sopstaf\.dynopro\.my|https://DOMAIN-BARU|g'
-```
-
-**Logo masih perlu diganti.** `icons/logo.svg` ialah **lukisan ganti** yang saya buat —
-ia *bukan* logo DYNO sebenar (fail asal tak sampai ke repo, hanya gambar dalam chat).
-Ganti dengan yang sebenar, kemudian jana semula ikon + kad OG:
+`tools/render.js` mengambil `icons/icon-512.png` sebagai sumber. Ia **tidak** menulis
+ganti fail logo — ia hanya menghasilkan `icons/apple-touch-icon.png` (dileper atas
+latar jenama, sebab iOS jadikan ketelusan hitam) dan `img/og.png`.
 
 ```bash
-# Pilihan A — ada fail SVG: tulis ganti icons/logo.svg, lepas tu:
 NODE_PATH=$(npm root -g) node tools/render.js
-
-# Pilihan B — ada fail PNG sahaja: letak terus sebagai
-#   icons/icon-192.png, icons/icon-512.png, icons/apple-touch-icon.png
-#   dan JANGAN jalankan tools/render.js (ia akan tulis ganti fail tersebut).
-#   Untuk kad OG, jalankan render.js selepas kemas kini tools/og.html.
 ```
+
+Kalau logo bertukar: ganti `icons/icon-192.png` + `icons/icon-512.png`, jalankan
+arahan di atas.
 
 ## Semakan sebelum push
 
@@ -63,6 +56,19 @@ Open Graph, Twitter Card, JSON-LD, padanan soalan FAQ dengan schema), setiap `<i
 ada `width`/`height`/`alt`, tiada rujukan aset yang rosak, tiada horizontal scroll pada
 390px, dan demo interaktif betul-betul berfungsi (tukar staf, tick, tab Admin, reset).
 Screenshot disimpan dalam `.build/` (tidak di-commit).
+
+## Deploy — GitHub Pages
+
+Halaman ini statik di root repo, jadi Pages boleh terus terbit dari branch.
+
+**Penting:** custom domain perlu fail `CNAME` dalam branch yang diterbitkan. Cara paling
+selamat ialah set di **Settings → Pages → Custom domain** (`sopstaf.dynopro.my`) —
+GitHub akan cipta `CNAME` sendiri dan uruskan sijil HTTPS. Kalau fail itu tiada, tapak
+akan terbit di `dynopos.github.io` sedangkan semua tag SEO menunjuk ke
+`sopstaf.dynopro.my`; canonical yang tak padan dengan URL sebenar boleh jejaskan
+pengindeksan.
+
+DNS di pihak `dynopro.my`: satu rekod `CNAME` untuk `sopstaf` → `dynopos.github.io`.
 
 ## Status SEO
 
@@ -78,11 +84,11 @@ Sudah siap dalam kod:
 - Tiada imej hero — LCP ialah teks, jadi tiada muat turun besar sebelum paint
 - Mobile-first, tap target ≥ 44px, skip link, `:focus-visible`, `prefers-reduced-motion`
 
-Perlu dibuat di luar kod (rujuk checklist SEO 39/41/44):
+Perlu dibuat di luar kod:
 
 - Hantar `sitemap.xml` dalam Google Search Console selepas domain hidup
 - Tuntut & sahkan Google Business Profile. Kalau ada alamat premis fizikal, beritahu —
-  saya boleh tambah schema `LocalBusiness` dengan NAP yang sepadan (sekarang guna
+  boleh tambah schema `LocalBusiness` dengan NAP yang sepadan (sekarang guna
   `Organization` sahaja sebab tiada alamat)
 - Kumpul review Google untuk sokong local SEO
 - Pantau Search Console & kekalkan kandungan segar
