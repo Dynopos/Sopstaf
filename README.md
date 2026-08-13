@@ -27,17 +27,18 @@ tools/verify.js     Semakan SEO + ujian fungsi demo + screenshot
 npx http-server . -p 8080     # buka http://localhost:8080
 ```
 
-## Sebelum launch — 2 perkara WAJIB tukar
+## Sebelum launch
 
-**1. Domain.** Semua tag SEO sekarang guna placeholder `https://sopstaf.com`.
-Tukar kepada domain sebenar:
+**Domain** sudah ditetapkan kepada `https://sopstaf.dynopro.my` — canonical, Open Graph,
+Twitter Card, JSON-LD, `robots.txt` dan `sitemap.xml` semua menunjuk ke situ. Kalau
+bertukar kemudian, ganti sekali gus:
 
 ```bash
-grep -rl 'sopstaf\.com' index.html robots.txt sitemap.xml \
-  | xargs sed -i 's|https://sopstaf\.com|https://DOMAIN-ANDA.com|g'
+grep -rl 'sopstaf\.dynopro\.my' index.html robots.txt sitemap.xml \
+  | xargs sed -i 's|https://sopstaf\.dynopro\.my|https://DOMAIN-BARU|g'
 ```
 
-**2. Logo.** `icons/logo.svg` sekarang ialah **lukisan ganti** yang saya buat —
+**Logo masih perlu diganti.** `icons/logo.svg` ialah **lukisan ganti** yang saya buat —
 ia *bukan* logo DYNO sebenar (fail asal tak sampai ke repo, hanya gambar dalam chat).
 Ganti dengan yang sebenar, kemudian jana semula ikon + kad OG:
 

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sopstaf.com/sitemap.xml
+Sitemap: https://sopstaf.dynopro.my/sitemap.xml
