@@ -377,29 +377,45 @@
     </div>
 
     <div>
-      <div class="phoneFrame" role="img" aria-label="Paparan app DYNO SOP Staf menunjukkan senarai tugasan harian staf, 3 daripada 6 tugas sudah siap">
+      <div class="phoneFrame phoneRel appPhone">
         <div class="dHead">
           <img src="icons/icon-192.png" width="32" height="32" alt="">
           <div><b>DYNO SOP Staf</b><small>Tugasan &amp; reminder harian</small></div>
         </div>
-        <div class="dTabs" aria-hidden="true">
-          <span class="dTab" aria-selected="true">📋 Tugasan Saya</span>
-          <span class="dTab" aria-selected="false">🔒 Admin</span>
+        <div class="dTabs" role="tablist" aria-label="Paparan app">
+          <button class="dTab js-tab" data-tab="staf" role="tab" id="hTabStaf"
+                  aria-controls="hPanStaf" aria-selected="true">📋 Tugasan Saya</button>
+          <button class="dTab js-tab" data-tab="admin" role="tab" id="hTabAdmin"
+                  aria-controls="hPanAdmin" aria-selected="false">🔒 Admin</button>
         </div>
         <div class="dBody">
-          <div class="dCard">
-            <div class="dLbl">Siapa anda?</div>
-            <div class="dSel">Aisyah</div>
+          <div class="js-pan-staf" id="hPanStaf" role="tabpanel" aria-labelledby="hTabStaf">
+            <div class="dCard">
+              <label class="dLbl" for="hStaf">Siapa anda?</label>
+              <select class="dSel js-staf" id="hStaf"></select>
+            </div>
+            <div class="dCard">
+              <div class="dTop"><b>Hari Ini</b><span class="dChip js-prog">0/0 siap</span></div>
+              <div class="dSub">Tekan ✓ bila tugas selesai</div>
+              <div class="js-list"></div>
+              <button class="dReset js-reset">↺ Reset demo</button>
+            </div>
           </div>
-          <div class="dCard">
-            <div class="dTop"><b>Hari Ini</b><span class="dChip">3/6 siap</span></div>
-            <div class="dSub">Tekan ✓ bila tugas selesai</div>
-            <div class="dTask done"><span class="tm">08:45</span><span><span class="tj">🔓 Buka kedai &amp; on semua lampu</span><span class="ms">SOP pembukaan kedai</span></span><span class="dTick">✓</span></div>
-            <div class="dTask done"><span class="tm">08:50</span><span><span class="tj">☕ On mesin kopi &amp; panaskan</span><span class="ms">Siap sebelum customer masuk</span></span><span class="dTick">✓</span></div>
-            <div class="dTask done"><span class="tm">09:00</span><span><span class="tj">💰 Kira duit float register</span><span class="ms">Rekod jumlah dalam buku</span></span><span class="dTick">✓</span></div>
-            <div class="dTask"><span class="tm">09:10</span><span><span class="tj">🪑 Susun meja &amp; lap counter</span><span class="ms">Kemas sebelum waktu puncak</span></span><span class="dTick"></span></div>
-            <div class="dTask"><span class="tm">12:30</span><span><span class="tj">🥛 Semak stok susu &amp; bekalan</span><span class="ms">Order kalau kurang</span></span><span class="dTick"></span></div>
-            <div class="dTask"><span class="tm">15:00</span><span><span class="tj">🧹 Spot check kebersihan</span><span class="ms">Toilet, lantai &amp; meja customer</span></span><span class="dTick"></span></div>
+          <div class="js-pan-admin" id="hPanAdmin" role="tabpanel" aria-labelledby="hTabAdmin" hidden>
+            <div class="dCard">
+              <div class="dTop"><b>Progress Hari Ini</b><span class="dChip">Live</span></div>
+              <div class="dSub">Apa yang boss nampak — semua staf, satu skrin</div>
+              <div class="js-admin"></div>
+            </div>
+          </div>
+        </div>
+        <div class="dModal js-modal">
+          <div class="dBox">
+            <p class="js-teks">Anda selesai tugas ini?</p>
+            <div class="dRow">
+              <button class="dTidak js-jawab" data-ya="0">Tidak</button>
+              <button class="dYa js-jawab" data-ya="1">Ya</button>
+            </div>
           </div>
         </div>
       </div>
@@ -486,42 +502,44 @@
         </div>
       </div>
       <div>
-        <div class="phoneFrame phoneRel">
+        <div class="phoneFrame phoneRel appPhone">
           <div class="dHead">
             <img src="icons/icon-192.png" width="32" height="32" alt="" loading="lazy">
             <div><b>DYNO SOP Staf</b><small>Tugasan &amp; reminder harian</small></div>
           </div>
           <div class="dTabs" role="tablist" aria-label="Paparan app">
-            <button class="dTab" role="tab" id="tabStaf" aria-controls="panStaf" aria-selected="true" onclick="dTukarTab('staf')">📋 Tugasan Saya</button>
-            <button class="dTab" role="tab" id="tabAdmin" aria-controls="panAdmin" aria-selected="false" onclick="dTukarTab('admin')">🔒 Admin</button>
+            <button class="dTab js-tab" data-tab="staf" role="tab" id="dTabStaf"
+                    aria-controls="dPanStaf" aria-selected="true">📋 Tugasan Saya</button>
+            <button class="dTab js-tab" data-tab="admin" role="tab" id="dTabAdmin"
+                    aria-controls="dPanAdmin" aria-selected="false">🔒 Admin</button>
           </div>
           <div class="dBody">
-            <div id="panStaf" role="tabpanel" aria-labelledby="tabStaf">
+            <div class="js-pan-staf" id="dPanStaf" role="tabpanel" aria-labelledby="dTabStaf">
               <div class="dCard">
                 <label class="dLbl" for="dStaf">Siapa anda?</label>
-                <select class="dSel" id="dStaf" onchange="dPilihStaf(this.selectedIndex)"></select>
+                <select class="dSel js-staf" id="dStaf"></select>
               </div>
               <div class="dCard">
-                <div class="dTop"><b>Hari Ini</b><span class="dChip" id="dProg">0/0 siap</span></div>
+                <div class="dTop"><b>Hari Ini</b><span class="dChip js-prog">0/0 siap</span></div>
                 <div class="dSub">Tekan ✓ bila tugas selesai</div>
-                <div id="dList"></div>
-                <button class="dReset" onclick="dReset()">↺ Reset demo</button>
+                <div class="js-list"></div>
+                <button class="dReset js-reset">↺ Reset demo</button>
               </div>
             </div>
-            <div id="panAdmin" role="tabpanel" aria-labelledby="tabAdmin" hidden>
+            <div class="js-pan-admin" id="dPanAdmin" role="tabpanel" aria-labelledby="dTabAdmin" hidden>
               <div class="dCard">
                 <div class="dTop"><b>Progress Hari Ini</b><span class="dChip">Live</span></div>
                 <div class="dSub">Apa yang boss nampak — semua staf, satu skrin</div>
-                <div id="dAdminList"></div>
+                <div class="js-admin"></div>
               </div>
             </div>
           </div>
-          <div class="dModal" id="dModal">
+          <div class="dModal js-modal">
             <div class="dBox">
-              <p id="dTeks">Anda selesai tugas ini?</p>
+              <p class="js-teks">Anda selesai tugas ini?</p>
               <div class="dRow">
-                <button class="dTidak" onclick="dJawab(false)">Tidak</button>
-                <button class="dYa" onclick="dJawab(true)">Ya</button>
+                <button class="dTidak js-jawab" data-ya="0">Tidak</button>
+                <button class="dYa js-jawab" data-ya="1">Ya</button>
               </div>
             </div>
           </div>
@@ -630,6 +648,8 @@
 
 <script>
 // ===== Demo interaktif =====
+// Satu state, dikongsi oleh kedua-dua telefon pada halaman (hero + seksyen demo),
+// supaya prospek boleh tekan tick pada mana-mana satu dan kedua-duanya kekal selari.
 var dStafData = [
   { nama:'Aisyah', tugas:[
     {masa:'08:45', tajuk:'🔓 Buka kedai & on semua lampu', ms:'SOP pembukaan kedai', done:true},
@@ -654,77 +674,111 @@ var dStafData = [
   ]}
 ];
 
-// Salinan asal untuk butang reset
-var dAsal = JSON.parse(JSON.stringify(dStafData));
-var dAktif = 0, dPilih = -1;
+var dAsal = JSON.parse(JSON.stringify(dStafData));   // salinan untuk butang reset
+var dAktif = 0;
+var dPending = null;
 
 function dEsc(s){
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+                  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function dIsiStaf(){
-  document.getElementById('dStaf').innerHTML =
-    dStafData.map(function(s){ return '<option>' + dEsc(s.nama) + '</option>'; }).join('');
+function dPhones(){
+  return Array.prototype.slice.call(document.querySelectorAll('.appPhone'));
 }
 
 function dRender(){
   var tugas = dStafData[dAktif].tugas;
-  document.getElementById('dList').innerHTML = tugas.map(function(t, i){
+  var siap = tugas.filter(function(t){ return t.done; }).length;
+
+  var rows = tugas.map(function(t, i){
     return '<div class="dTask' + (t.done ? ' done' : '') + '">' +
       '<span class="tm">' + dEsc(t.masa) + '</span>' +
       '<span><span class="tj">' + dEsc(t.tajuk) + '</span>' +
       '<span class="ms">' + dEsc(t.ms) + '</span></span>' +
-      '<button class="dTick" aria-label="Tanda siap: ' + dEsc(t.tajuk) + '" onclick="dTanda(' + i + ')">' +
-      (t.done ? '✓' : '') + '</button></div>';
+      '<button class="dTick js-tick" data-i="' + i + '" aria-label="Tanda siap: ' +
+      dEsc(t.tajuk) + '">' + (t.done ? '✓' : '') + '</button></div>';
   }).join('');
 
-  var siap = tugas.filter(function(t){ return t.done; }).length;
-  document.getElementById('dProg').textContent = siap + '/' + tugas.length + ' siap';
-
-  document.getElementById('dAdminList').innerHTML = dStafData.map(function(s){
+  var admin = dStafData.map(function(s){
     var d = s.tugas.filter(function(t){ return t.done; }).length;
     var pct = Math.round(d / s.tugas.length * 100);
     return '<div class="dAdmin"><span class="an">' + dEsc(s.nama) + '</span>' +
       '<span class="dBar"><i style="width:' + pct + '%"></i></span>' +
       '<span class="ap">' + d + '/' + s.tugas.length + '</span></div>';
   }).join('');
+
+  var pilihan = dStafData.map(function(s){
+    return '<option>' + dEsc(s.nama) + '</option>';
+  }).join('');
+
+  dPhones().forEach(function(ph){
+    ph.querySelector('.js-list').innerHTML = rows;
+    ph.querySelector('.js-admin').innerHTML = admin;
+    ph.querySelector('.js-prog').textContent = siap + '/' + tugas.length + ' siap';
+    var sel = ph.querySelector('.js-staf');
+    if (sel.options.length !== dStafData.length) sel.innerHTML = pilihan;
+    sel.selectedIndex = dAktif;
+  });
 }
 
-function dPilihStaf(i){ dAktif = i; dRender(); }
-
-function dTukarTab(which){
-  var staf = which === 'staf';
-  document.getElementById('panStaf').hidden = !staf;
-  document.getElementById('panAdmin').hidden = staf;
-  document.getElementById('tabStaf').setAttribute('aria-selected', staf);
-  document.getElementById('tabAdmin').setAttribute('aria-selected', !staf);
+function dTutupModal(){
+  dPhones().forEach(function(ph){ ph.querySelector('.js-modal').classList.remove('on'); });
+  dPending = null;
 }
 
-function dTanda(i){
-  dPilih = i;
-  var t = dStafData[dAktif].tugas[i];
-  document.getElementById('dTeks').textContent = t.done
-    ? 'Batalkan tanda siap untuk "' + t.tajuk + '"? Boss akan dimaklumkan.'
-    : 'Anda selesai tugas "' + t.tajuk + '"?';
-  document.getElementById('dModal').classList.add('on');
-}
+document.addEventListener('click', function(e){
+  var el;
 
-function dJawab(ya){
-  document.getElementById('dModal').classList.remove('on');
-  if (ya && dPilih >= 0){
-    var t = dStafData[dAktif].tugas[dPilih];
-    t.done = !t.done;
+  if ((el = e.target.closest('.js-tick'))){
+    var ph = el.closest('.appPhone');
+    var i = parseInt(el.getAttribute('data-i'), 10);
+    var t = dStafData[dAktif].tugas[i];
+    dPending = i;
+    ph.querySelector('.js-teks').textContent = t.done
+      ? 'Batalkan tanda siap untuk "' + t.tajuk + '"? Boss akan dimaklumkan.'
+      : 'Anda selesai tugas "' + t.tajuk + '"?';
+    ph.querySelector('.js-modal').classList.add('on');
+    return;
+  }
+
+  if ((el = e.target.closest('.js-jawab'))){
+    var ya = el.getAttribute('data-ya') === '1';
+    var idx = dPending;
+    dTutupModal();
+    if (ya && idx !== null){
+      var tugas = dStafData[dAktif].tugas[idx];
+      tugas.done = !tugas.done;
+      dRender();
+    }
+    return;
+  }
+
+  if ((el = e.target.closest('.js-reset'))){
+    dStafData = JSON.parse(JSON.stringify(dAsal));
+    dAktif = 0;
+    dRender();
+    return;
+  }
+
+  if ((el = e.target.closest('.js-tab'))){
+    var kad = el.closest('.appPhone');
+    var staf = el.getAttribute('data-tab') === 'staf';
+    kad.querySelector('.js-pan-staf').hidden = !staf;
+    kad.querySelector('.js-pan-admin').hidden = staf;
+    Array.prototype.slice.call(kad.querySelectorAll('.js-tab')).forEach(function(b){
+      b.setAttribute('aria-selected', (b.getAttribute('data-tab') === 'staf') === staf);
+    });
+  }
+});
+
+document.addEventListener('change', function(e){
+  if (e.target.closest('.js-staf')){
+    dAktif = e.target.selectedIndex;
     dRender();
   }
-  dPilih = -1;
-}
+});
 
-function dReset(){
-  dStafData = JSON.parse(JSON.stringify(dAsal));
-  dRender();
-}
-
-dIsiStaf();
 dRender();
 </script>
 </body>

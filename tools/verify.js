@@ -1,4 +1,6 @@
 // Functional + SEO verification for index.html, plus reference screenshots.
+// Run: NODE_PATH=$(npm root -g) node tools/verify.js
+const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 
@@ -33,76 +35,113 @@ const ok = (c, m) => out.push(`${c ? 'PASS' : 'FAIL'}  ${m}`);
   ok((await page.getAttribute('html', 'lang')) === 'ms', 'html lang="ms"');
 
   const ld = await page.locator('script[type="application/ld+json"]').innerText();
-  let types = [];
+  let graph = [];
   try {
-    types = JSON.parse(ld)['@graph'].map(n => n['@type']);
+    graph = JSON.parse(ld)['@graph'];
     ok(true, 'JSON-LD parses');
   } catch (e) { ok(false, 'JSON-LD parses: ' + e.message); }
+  const types = graph.map(n => n['@type']);
   for (const t of ['Organization', 'Product', 'FAQPage']) {
     ok(types.includes(t), `JSON-LD includes ${t}`);
   }
 
   // FAQ schema must match the visible questions
   const visibleFaq = await page.locator('#faq summary').allInnerTexts();
-  const schemaFaq = JSON.parse(ld)['@graph'].find(n => n['@type'] === 'FAQPage')
-    .mainEntity.map(q => q.name);
+  const schemaFaq = graph.find(n => n['@type'] === 'FAQPage').mainEntity.map(q => q.name);
   ok(visibleFaq.length === schemaFaq.length, `FAQ count matches schema (${visibleFaq.length})`);
+  ok(visibleFaq.every((q, i) => q.trim() === schemaFaq[i].trim()),
+     'FAQ question text matches schema word for word');
+
+  // Pricing must state the annual fee as mandatory, not optional
+  const harga = await page.locator('#harga').innerText();
+  ok(/RM199/.test(harga) && /RM99/.test(harga), 'both prices shown');
+  ok(/[Ww]ajib/.test(harga), 'annual fee marked as wajib (mandatory)');
+  ok(!/pilihan\b(?!\.)/.test(harga.replace('bukan pilihan', '')),
+     'annual fee not described as optional');
+
+  // The page must not promise a live demo that does not exist
+  const body = await page.locator('body').innerText();
+  ok(!/demo percuma/i.test(body), 'no "demo percuma" promise');
 
   // Images must be dimensioned + described
   const imgs = await page.locator('img').evaluateAll(els =>
-    els.map(e => ({ src: e.getAttribute('src'), w: e.getAttribute('width'),
-                    h: e.getAttribute('height'), alt: e.getAttribute('alt') })));
+    els.map(e => ({ w: e.getAttribute('width'), h: e.getAttribute('height'),
+                    alt: e.getAttribute('alt') })));
   ok(imgs.every(i => i.w && i.h), 'every <img> has width+height (CLS)');
   ok(imgs.every(i => i.alt !== null), 'every <img> has an alt attribute');
 
   // No broken asset references
-  const bad = [];
-  page.on('response', r => { if (r.status() >= 400) bad.push(r.url()); });
   const assets = await page.evaluate(() =>
     [...document.querySelectorAll('img[src],link[href]')]
       .map(e => e.src || e.href).filter(u => u.startsWith('file:')));
-  const fs = require('fs');
-  for (const a of assets) {
-    if (!fs.existsSync(decodeURI(a.replace('file://', '')))) bad.push(a);
-  }
+  const bad = assets.filter(a => !fs.existsSync(decodeURI(a.replace('file://', ''))));
   ok(bad.length === 0, 'all referenced local assets exist' + (bad.length ? ': ' + bad.join(', ') : ''));
 
-  // --- Demo behaviour ---
-  const prog = () => page.locator('#dProg').innerText();
-  ok((await prog()) === '3/6 siap', `default progress is 3/6 (got ${await prog()})`);
+  // --- Demo behaviour: BOTH phones must be live and stay in sync ---
+  const phones = page.locator('.appPhone');
+  const nPhones = await phones.count();
+  ok(nPhones === 2, `two interactive phones on the page (${nPhones})`);
 
-  await page.locator('#dStaf').selectOption({ index: 1 });          // Hafiz
-  ok((await prog()) === '1/4 siap', `staff switch updates list (got ${await prog()})`);
-  await page.locator('#dStaf').selectOption({ index: 0 });          // back to Aisyah
+  const hero = phones.nth(0), demo = phones.nth(1);
+  const prog = l => l.locator('.js-prog').innerText();
 
-  await page.locator('#dList .dTask').nth(3).locator('.dTick').click();
-  ok(await page.locator('#dModal').evaluate(e => e.classList.contains('on')), 'tick opens confirm modal');
-  await page.locator('.dYa').click();
-  ok((await prog()) === '4/6 siap', `confirming a tick updates progress (got ${await prog()})`);
+  // every tick must be a real button, in both phones
+  const tickTags = await page.locator('.dTick').evaluateAll(els => [...new Set(els.map(e => e.tagName))]);
+  ok(tickTags.length === 1 && tickTags[0] === 'BUTTON', `all ticks are <button> (${tickTags})`);
 
-  await page.locator('#tabAdmin').click();
-  ok(await page.locator('#panAdmin').isVisible(), 'Admin tab reveals boss view');
-  const rows = await page.locator('#dAdminList .dAdmin').count();
-  ok(rows === 3, `admin view lists all ${rows} staff`);
-  await page.locator('#tabStaf').click();
+  ok((await prog(hero)) === '3/6 siap', `hero starts 3/6 (${await prog(hero)})`);
+  ok((await prog(demo)) === '3/6 siap', `demo starts 3/6 (${await prog(demo)})`);
 
-  await page.locator('.dReset').click();
-  ok((await prog()) === '3/6 siap', 'reset restores the demo');
+  // tick in the HERO phone — this is what was dead before
+  await hero.locator('.js-tick').nth(3).click();
+  ok(await hero.locator('.js-modal').evaluate(e => e.classList.contains('on')),
+     'tick in hero opens the confirm modal');
+  await hero.locator('.js-jawab[data-ya="1"]').click();
+  ok((await prog(hero)) === '4/6 siap', `hero tick updates progress (${await prog(hero)})`);
+  ok((await prog(demo)) === '4/6 siap', 'both phones stay in sync');
+
+  // "Tidak" must close without changing anything
+  await demo.locator('.js-tick').nth(4).click();
+  await demo.locator('.js-jawab[data-ya="0"]').click();
+  ok((await prog(demo)) === '4/6 siap', 'answering Tidak changes nothing');
+
+  // tick in the DEMO phone
+  await demo.locator('.js-tick').nth(4).click();
+  await demo.locator('.js-jawab[data-ya="1"]').click();
+  ok((await prog(hero)) === '5/6 siap', `demo tick updates both (${await prog(hero)})`);
+
+  await demo.locator('.js-staf').selectOption({ index: 1 });
+  ok((await prog(demo)) === '1/4 siap', `staff switch updates list (${await prog(demo)})`);
+  ok((await prog(hero)) === '1/4 siap', 'staff switch mirrors to the other phone');
+
+  await demo.locator('.js-tab[data-tab="admin"]').click();
+  ok(await demo.locator('.js-pan-admin').isVisible(), 'Admin tab reveals boss view');
+  ok((await demo.locator('.js-admin .dAdmin').count()) === 3, 'admin view lists all 3 staff');
+  await demo.locator('.js-tab[data-tab="staf"]').click();
+
+  await demo.locator('.js-reset').click();
+  ok((await prog(demo)) === '3/6 siap', 'reset restores the demo');
 
   ok(errors.length === 0, 'no JS errors' + (errors.length ? ': ' + errors.join('; ') : ''));
 
-  // --- Screenshots (fresh page so it starts at the top, demo in default state) ---
+  // --- Mobile: the hero phone is what a prospect taps first ---
+  const m = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  await m.goto(url, { waitUntil: 'networkidle' });
+  const mHero = m.locator('.appPhone').first();
+  await mHero.locator('.js-tick').nth(3).tap();
+  await mHero.locator('.js-jawab[data-ya="1"]').tap();
+  ok((await mHero.locator('.js-prog').innerText()) === '4/6 siap',
+     'tapping the hero phone works on mobile (touch)');
+  const overflow = await m.evaluate(() =>
+    document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  ok(overflow <= 0, `no horizontal overflow on 390px (${overflow}px)`);
+
+  // --- Screenshots ---
   const snap = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   await snap.goto(url, { waitUntil: 'networkidle' });
   await snap.screenshot({ path: path.join(root, '.build/shot-hero.png') });
   await snap.locator('#demo .phoneFrame').screenshot({ path: path.join(root, '.build/shot-demo.png') });
-
-  const m = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true });
-  await m.goto(url, { waitUntil: 'networkidle' });
   await m.screenshot({ path: path.join(root, '.build/shot-mobile.png') });
-  const overflow = await m.evaluate(() =>
-    document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  ok(overflow <= 0, `no horizontal overflow on 390px (${overflow}px)`);
 
   await browser.close();
   console.log(out.join('\n'));
