@@ -1,0 +1,4 @@
+# Local render/verify output (regenerate with tools/)
+.build/
+node_modules/
+.DS_Store

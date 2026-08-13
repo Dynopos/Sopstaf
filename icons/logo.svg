@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="DYNO SOP Staf">
+  <defs>
+    <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".28" stop-color="#c3d2cb"/>
+      <stop offset=".5" stop-color="#7d9488"/>
+      <stop offset=".72" stop-color="#e6eeea"/>
+      <stop offset="1" stop-color="#6b8275"/>
+    </linearGradient>
+    <radialGradient id="field" cx=".38" cy=".3" r=".85">
+      <stop offset="0" stop-color="#125c36"/>
+      <stop offset="1" stop-color="#04220f"/>
+    </radialGradient>
+    <linearGradient id="scale" x1=".1" y1="0" x2=".5" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#b3c9bd"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="256" cy="256" r="250" fill="url(#chrome)"/>
+  <circle cx="256" cy="256" r="232" fill="#2f3b35" opacity=".55"/>
+  <circle cx="256" cy="256" r="222" fill="url(#field)"/>
+
+  <g transform="translate(512,0) scale(-1,1)">
+    <g transform="translate(-25,-33)" stroke="#0b2a18" stroke-width="7"
+       stroke-linejoin="round" stroke-linecap="round">
+
+      <path d="M214 201 L224 179 L234 203 Z M240 204 L250 181 L260 205 Z
+               M266 203 L276 179 L286 203 Z M292 200 L302 177 L312 202 Z
+               M318 201 L328 180 L338 206 Z M344 207 L353 188 L363 214 Z
+               M372 218 L381 200 L390 226 Z M398 228 L407 210 L416 236 Z"
+            fill="#dfeae4"/>
+
+      <path d="M226 300 Q220 340 228 380 Q232 396 236 398
+               Q242 404 232 405 L192 405 Q182 403 187 392
+               Q200 356 202 320 Q203 300 208 286 Z"
+            fill="#8fab9c"/>
+
+      <path d="M100 210
+               Q102 186 126 181 L152 178
+               Q176 176 190 180 Q206 186 209 202
+               Q232 214 258 206 Q300 196 330 202
+               Q356 207 370 216 Q412 232 462 252
+               Q456 262 410 264 Q386 268 368 272
+               Q382 308 374 342 Q366 372 370 390
+               Q374 402 362 403 L320 403 Q310 401 314 390
+               Q332 362 330 336 Q326 310 314 294
+               Q280 290 242 286
+               Q228 298 224 322 Q222 356 232 382
+               Q236 396 224 397 L184 397 Q174 395 179 384
+               Q194 350 196 316 Q197 288 192 266
+               Q176 250 150 240 Q122 232 106 226 Q98 220 100 210 Z"
+            fill="url(#scale)"/>
+
+      <path d="M196 262 Q220 266 236 284 Q240 294 229 291 Q214 277 193 274 Z"
+            fill="url(#scale)"/>
+
+      <path d="M108 218 Q134 224 160 229" fill="none" stroke-width="7"/>
+      <circle cx="155" cy="197" r="10" fill="#0b2a18" stroke="none"/>
+    </g>
+  </g>
+</svg>

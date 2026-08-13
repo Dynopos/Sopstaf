@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CANONICAL DOMAIN: change every https://sopstaf.com below to your real domain -->
+<title>Sistem SOP Staf &amp; Reminder Tugasan Automatik | DYNO</title>
+<meta name="description" content="Sistem SOP staf automatik untuk bisnes Malaysia. Reminder tugasan ke Telegram, staf tick siap, boss nampak semua. Setup RM199 sekali — tiada yuran bulanan.">
+<link rel="canonical" href="https://sopstaf.com/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0b1a11">
+
+<link rel="icon" type="image/svg+xml" href="icons/logo.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DYNO SOP Staf">
+<meta property="og:locale" content="ms_MY">
+<meta property="og:url" content="https://sopstaf.com/">
+<meta property="og:title" content="Sistem SOP Staf &amp; Reminder Tugasan Automatik | DYNO">
+<meta property="og:description" content="Reminder tugasan automatik ke Telegram staf. Staf tick siap, boss nampak semua. Setup RM199 sekali, tiada yuran server bulanan.">
+<meta property="og:image" content="https://sopstaf.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DYNO SOP Staf — sistem tugasan dan reminder automatik untuk staf">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sistem SOP Staf &amp; Reminder Tugasan Automatik | DYNO">
+<meta name="twitter:description" content="Reminder tugasan automatik ke Telegram staf. Setup RM199 sekali, tiada yuran server bulanan.">
+<meta name="twitter:image" content="https://sopstaf.com/img/og.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://sopstaf.com/#org",
+      "name": "DYNO SOP Staf",
+      "url": "https://sopstaf.com/",
+      "logo": "https://sopstaf.com/icons/icon-512.png",
+      "areaServed": { "@type": "Country", "name": "Malaysia" },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+60182889932",
+        "contactType": "sales",
+        "availableLanguage": ["ms", "en"]
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://sopstaf.com/#product",
+      "name": "DYNO SOP Staf",
+      "brand": { "@id": "https://sopstaf.com/#org" },
+      "description": "Sistem SOP dan reminder tugasan automatik untuk staf bisnes kecil di Malaysia. Reminder Telegram mengikut jadual, app checklist staf, dan rekod prestasi untuk majikan.",
+      "image": "https://sopstaf.com/img/og.png",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://sopstaf.com/#harga",
+        "price": "199",
+        "priceCurrency": "MYR",
+        "availability": "https://schema.org/InStock",
+        "description": "Setup sekali RM199, dengan sokongan tahunan pilihan RM99 setahun."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://sopstaf.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Kenapa tiada yuran bulanan? Apa habuannya?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sebab sistem dipasang atas akaun Google anda sendiri (percuma dari Google) dan reminder guna Telegram (percuma). Tiada server kami yang anda perlu sewa. Kami untung dari yuran setup dan sokongan tahunan pilihan — bukan dari mengikat anda dengan langganan." }
+        },
+        {
+          "@type": "Question",
+          "name": "Data saya selamat? Siapa punya?",
+          "acceptedAnswer": { "@type": "Answer", "text": "100% milik anda. Semua data (staf, jadual, rekod) duduk dalam Google Sheet akaun anda sendiri — bukan server orang lain. Kalau berhenti guna khidmat kami pun, sistem anda terus berjalan." }
+        },
+        {
+          "@type": "Question",
+          "name": "Staf saya bukan orang IT. Susah tak nak guna?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Kalau mereka boleh guna WhatsApp, mereka boleh guna ini. Staf cuma tekan START pada bot Telegram sekali, dan tekan tanda siap dalam app bila tugas selesai. Latihan ringkas termasuk dalam pakej setup." }
+        },
+        {
+          "@type": "Question",
+          "name": "Berapa ramai staf boleh guna?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Tanpa had, tanpa caj tambahan. 3 staf atau 30 staf — harga sama." }
+        },
+        {
+          "@type": "Question",
+          "name": "Telefon jenis apa yang disokong?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Semua — Android, iPhone, termasuk Huawei atau Honor tanpa Google Play. Selagi ada Telegram dan browser, boleh guna." }
+        },
+        {
+          "@type": "Question",
+          "name": "Berapa lama masa pemasangan?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Biasanya siap dalam sehari. Anda sediakan senarai staf dan jadual SOP, kami uruskan yang lain, dan sistem hidup petang itu juga." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --bg:#0b1a11; --bg2:#0f2418; --panel:#122b1c; --panel2:#173523;
+    --line:#1f4530; --txt:#eef7f1; --mut:#93b8a2; --acc:#3ddc84; --acc2:#22a55b;
+    --dark:#06301b; --amber:#f5b40b;
+    --appbg:#0f1720; --apppanel:#1b2836; --appline:#243444; --appmut:#8fa2b6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  .skip{position:absolute;left:-9999px;top:0;background:var(--acc);color:var(--dark);
+    padding:12px 20px;border-radius:0 0 10px 0;font-weight:800;z-index:100}
+  .skip:focus{left:0}
+  :focus-visible{outline:3px solid var(--acc);outline-offset:3px;border-radius:6px}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:#0b1a11ee;backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line)}
+  .navin{display:flex;align-items:center;gap:12px;padding:12px 0}
+  .navin img{width:42px;height:42px;border-radius:11px}
+  .navin .nm{font-weight:800;font-size:17px}
+  .navlinks{margin-left:auto;display:flex;gap:22px;align-items:center;font-size:14px;font-weight:600;color:var(--mut)}
+  .navlinks a:hover{color:var(--txt)}
+  .navlinks .cta{background:var(--acc);color:var(--dark);padding:11px 18px;border-radius:10px;font-weight:800}
+  @media(max-width:720px){.navlinks a:not(.cta){display:none}}
+
+  /* HERO */
+  .hero{position:relative;padding:72px 0 40px;overflow:hidden}
+  .hero::before{content:'';position:absolute;width:800px;height:800px;border-radius:50%;
+    background:radial-gradient(circle,#3ddc8418,transparent 62%);top:-260px;right:-260px;pointer-events:none}
+  .heroin{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;position:relative}
+  @media(max-width:860px){.heroin{grid-template-columns:1fr}}
+  .kicker{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);
+    padding:7px 14px;border-radius:999px;font-size:13px;font-weight:700;color:var(--acc);margin-bottom:18px}
+  h1{font-size:clamp(34px,5vw,52px);line-height:1.14;font-weight:800;letter-spacing:-.5px}
+  h1 span{color:var(--acc)}
+  .heroSub{margin-top:18px;font-size:18px;color:var(--mut);max-width:480px}
+  .heroBtns{margin-top:28px;display:flex;gap:14px;flex-wrap:wrap}
+  .bigcta{background:var(--acc);color:var(--dark);font-weight:800;font-size:17px;
+    padding:15px 28px;border-radius:14px;box-shadow:0 10px 34px #3ddc8433;transition:.2s}
+  .bigcta:hover{transform:translateY(-2px);box-shadow:0 14px 40px #3ddc8455}
+  .ghost{border:1.5px solid var(--line);color:var(--txt);font-weight:700;font-size:16px;
+    padding:15px 26px;border-radius:14px;background:var(--panel);transition:.2s}
+  .ghost:hover{border-color:var(--acc);color:var(--acc)}
+  .trust{margin-top:26px;display:flex;gap:26px;flex-wrap:wrap;font-size:13.5px;color:var(--mut)}
+  .trust b{color:var(--txt)}
+
+  /* SECTIONS */
+  section{padding:74px 0}
+  .sechead{text-align:center;max-width:640px;margin:0 auto 44px}
+  .sechead .tag{color:var(--acc);font-weight:800;font-size:14px;letter-spacing:1.5px;text-transform:uppercase}
+  .sechead h2{font-size:clamp(26px,3.6vw,38px);font-weight:800;margin-top:10px;letter-spacing:-.4px}
+  .sechead p{color:var(--mut);margin-top:12px;font-size:16.5px}
+
+  /* MASALAH */
+  .pains{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:820px){.pains{grid-template-columns:1fr}}
+  .pain{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px}
+  .pain .em{font-size:30px}
+  .pain h3{font-size:17px;margin:12px 0 6px}
+  .pain p{font-size:14.5px;color:var(--mut)}
+
+  /* CIRI */
+  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:820px){.feats{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.feats{grid-template-columns:1fr}}
+  .feat{background:linear-gradient(160deg,var(--panel),var(--bg2));border:1px solid var(--line);
+    border-radius:18px;padding:24px;transition:.2s}
+  .feat:hover{border-color:#3ddc8466;transform:translateY(-3px)}
+  .feat .ic{width:46px;height:46px;border-radius:13px;background:var(--panel2);border:1px solid var(--line);
+    display:grid;place-items:center;font-size:22px}
+  .feat h3{font-size:16.5px;margin:14px 0 6px}
+  .feat p{font-size:14px;color:var(--mut)}
+
+  /* LANGKAH */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+  @media(max-width:820px){.steps{grid-template-columns:1fr}}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;top:-16px;left:22px;
+    width:34px;height:34px;border-radius:10px;background:var(--acc);color:var(--dark);
+    display:grid;place-items:center;font-weight:800;font-size:16px}
+  .step h3{font-size:16.5px;margin:10px 0 6px}
+  .step p{font-size:14.5px;color:var(--mut)}
+
+  /* PHONE / APP MOCKUP */
+  .phoneFrame{width:min(360px,100%);margin:0 auto;background:var(--appbg);border:9px solid #1c3527;
+    border-radius:36px;overflow:hidden;box-shadow:0 34px 80px #000a, 0 0 0 2px #3ddc8430;font-size:14px}
+  .phoneRel{position:relative}
+  .dHead{display:flex;align-items:center;gap:10px;padding:13px 15px;
+    background:linear-gradient(180deg,#132030,#0f1720);border-bottom:1px solid var(--appline)}
+  .dHead img{width:32px;height:32px;border-radius:9px}
+  .dHead b{font-size:14px}
+  .dHead small{display:block;font-size:10.5px;color:var(--appmut)}
+  .dTabs{display:flex;gap:8px;padding:12px 14px 0}
+  .dTab{flex:1;border:1px solid var(--appline);background:#151f2b;color:var(--appmut);
+    border-radius:999px;padding:9px 10px;font-size:12.5px;font-weight:700;cursor:pointer;
+    font-family:inherit;min-height:38px}
+  .dTab[aria-selected="true"]{background:var(--acc2);border-color:var(--acc2);color:#04210f}
+  .dBody{padding:14px}
+  .dCard{background:#151f2b;border:1px solid var(--appline);border-radius:13px;padding:13px;margin-bottom:12px}
+  .dCard:last-child{margin-bottom:0}
+  .dLbl{font-size:11.5px;color:var(--appmut);margin-bottom:7px}
+  .dSel{width:100%;background:#1b2836;color:#fff;border:1px solid var(--appline);
+    border-radius:10px;padding:11px 12px;font-size:13.5px;font-family:inherit;min-height:44px}
+  .dTop{display:flex;align-items:center;margin-bottom:4px}
+  .dTop b{font-size:14px}
+  .dChip{margin-left:auto;font-size:10.5px;background:#22303f;border:1px solid var(--appline);
+    border-radius:999px;padding:2px 8px;color:var(--appmut)}
+  .dSub{font-size:11px;color:var(--appmut);margin-bottom:10px}
+  .dTask{display:flex;gap:10px;align-items:flex-start;padding:11px;border:1px solid var(--appline);
+    border-radius:11px;background:#1b2836;margin-bottom:7px}
+  .dTask > span:nth-of-type(2){flex:1;min-width:0}
+  .dTask .tm{display:block;font-weight:800;color:var(--amber);font-size:12.5px;min-width:42px}
+  .dTask.done .tm{color:#25d366}
+  .dTask .tj{display:block;font-weight:700;font-size:12.5px}
+  .dTask.done .tj{text-decoration:line-through;color:var(--appmut)}
+  .dTask .ms{display:block;font-size:10.5px;color:var(--appmut)}
+  .dTick{margin-left:auto;flex:0 0 auto;background:#151f2b;border:2px solid var(--appline);
+    width:34px;height:34px;border-radius:9px;font-size:15px;cursor:pointer;color:#fff;font-family:inherit}
+  .dTask.done .dTick{background:#25d366;border-color:#25d366;color:#04210f}
+  .dReset{margin-top:6px;width:100%;background:transparent;border:1px dashed var(--appline);
+    color:var(--appmut);padding:10px;border-radius:10px;font-size:11.5px;cursor:pointer;font-family:inherit}
+  .dAdmin{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid var(--appline);
+    border-radius:11px;background:#1b2836;margin-bottom:7px}
+  .dAdmin .an{font-size:12.5px;font-weight:700;min-width:64px}
+  .dBar{flex:1;height:8px;border-radius:99px;background:#22303f;overflow:hidden}
+  .dBar i{display:block;height:100%;background:var(--acc);border-radius:99px}
+  .dAdmin .ap{font-size:11px;color:var(--appmut);min-width:34px;text-align:right}
+  .dModal{position:absolute;inset:0;background:#000b;display:none;place-items:center;padding:20px;z-index:5}
+  .dModal.on{display:grid}
+  .dBox{background:#151f2b;border:1px solid var(--appline);border-radius:14px;padding:16px;width:100%}
+  .dBox p{font-size:13px;margin-bottom:12px}
+  .dRow{display:flex;gap:8px}
+  .dRow button{flex:1;padding:11px;border-radius:9px;font-weight:800;font-size:13px;
+    cursor:pointer;border:none;font-family:inherit;min-height:44px}
+  .dYa{background:#25d366;color:#04210f}
+  .dTidak{background:#1b2836;color:#fff;border:1px solid var(--appline)!important}
+  .demoTag{text-align:center;margin-top:14px;font-size:13px;color:var(--acc);font-weight:700}
+
+  /* DEMO */
+  .demoWrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center}
+  @media(max-width:860px){.demoWrap{grid-template-columns:1fr}}
+  .demoTxt h3{font-size:24px;font-weight:800;margin-bottom:12px}
+  .demoTxt p{color:var(--mut);font-size:16px;margin-bottom:16px}
+  .demoTxt li{list-style:none;font-size:15px;margin-bottom:10px;padding-left:28px;position:relative}
+  .demoTxt li::before{content:'✓';position:absolute;left:0;color:var(--acc);font-weight:800}
+
+  /* HARGA */
+  .prices{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:780px;margin:0 auto}
+  @media(max-width:720px){.prices{grid-template-columns:1fr}}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:32px;position:relative}
+  .price.hot{border:2px solid var(--acc);background:linear-gradient(170deg,#153323,var(--panel))}
+  .price .pop{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--acc);
+    color:var(--dark);font-size:12px;font-weight:800;padding:5px 16px;border-radius:999px;white-space:nowrap}
+  .price h3{font-size:17px;color:var(--mut);font-weight:700}
+  .amt{font-size:46px;font-weight:800;margin:8px 0 2px}
+  .amt small{font-size:16px;color:var(--mut);font-weight:600}
+  .price .note{font-size:13.5px;color:var(--mut);margin-bottom:18px}
+  .price li{list-style:none;font-size:14.5px;margin-bottom:11px;padding-left:26px;position:relative}
+  .price li::before{content:'✓';position:absolute;left:0;color:var(--acc);font-weight:800}
+  .price .bigcta,.price .ghost{display:block;text-align:center;margin-top:22px;font-size:15px;padding:14px}
+  .jimters{text-align:center;margin-top:26px;color:var(--mut);font-size:14.5px}
+  .jimters b{color:var(--acc)}
+
+  /* FAQ */
+  .faqs{max-width:720px;margin:0 auto}
+  details{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:18px 22px;margin-bottom:10px}
+  summary{font-weight:700;font-size:15.5px;cursor:pointer;list-style:none;display:flex;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:'+';margin-left:auto;font-size:22px;color:var(--acc);font-weight:400}
+  details[open] summary::after{content:'–'}
+  details p{margin-top:12px;font-size:14.5px;color:var(--mut)}
+
+  /* CTA AKHIR + FOOTER */
+  .final{background:linear-gradient(160deg,#153323,var(--bg2));border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);text-align:center}
+  .final h2{font-size:clamp(26px,3.6vw,38px);font-weight:800}
+  .final p{color:var(--mut);margin:14px auto 26px;max-width:480px}
+  footer{padding:34px 0 96px;text-align:center;color:var(--mut);font-size:13.5px}
+  footer img{width:38px;height:38px;border-radius:10px;margin-bottom:10px}
+
+  /* WA float */
+  .waFloat{position:fixed;right:18px;bottom:18px;z-index:60;background:#25d366;color:#04210f;
+    font-weight:800;font-size:14.5px;padding:14px 20px;border-radius:999px;
+    box-shadow:0 10px 30px #25d36655;display:flex;align-items:center;gap:8px}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important;animation:none!important}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#kandungan">Terus ke kandungan</a>
+
+<nav>
+  <div class="wrap navin">
+    <img src="icons/icon-192.png" width="42" height="42" alt="Logo DYNO SOP Staf">
+    <div class="nm">DYNO <span style="color:var(--acc)">SOP Staf</span></div>
+    <div class="navlinks">
+      <a href="#ciri">Ciri-ciri</a>
+      <a href="#demo">Demo</a>
+      <a href="#harga">Harga</a>
+      <a href="#faq">FAQ</a>
+      <a class="cta" href="https://wa.me/60182889932?text=Hai%20Borhan%2C%20saya%20berminat%20dengan%20DYNO%20SOP%20Staf" target="_blank" rel="noopener">Hubungi Kami</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="kandungan">
+  <div class="wrap heroin">
+    <div>
+      <p class="kicker">🦖 Sistem SOP untuk bisnes Malaysia</p>
+      <h1>Staf tak payah diingatkan lagi — <span>sistem SOP yang ingatkan mereka.</span></h1>
+      <p class="heroSub">Reminder tugasan masuk terus ke Telegram staf ikut jadual, setiap hari, secara automatik. Staf tick siap, anda nampak semua — bukti kerja, bukan cakap-cakap.</p>
+      <div class="heroBtns">
+        <a class="bigcta" href="https://wa.me/60182889932?text=Hai%20Borhan%2C%20saya%20berminat%20dengan%20DYNO%20SOP%20Staf.%20Boleh%20share%20detail%3F" target="_blank" rel="noopener">💬 WhatsApp Kami Sekarang</a>
+        <a class="ghost" href="#demo">Cuba Demo ↓</a>
+      </div>
+      <div class="trust">
+        <div><b>RM199</b> setup sekali</div>
+        <div><b>RM0</b> yuran server bulanan</div>
+        <div><b>1 hari</b> siap dipasang</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="phoneFrame" role="img" aria-label="Paparan app DYNO SOP Staf menunjukkan senarai tugasan harian staf, 3 daripada 6 tugas sudah siap">
+        <div class="dHead">
+          <img src="icons/icon-192.png" width="32" height="32" alt="">
+          <div><b>DYNO SOP Staf</b><small>Tugasan &amp; reminder harian</small></div>
+        </div>
+        <div class="dTabs" aria-hidden="true">
+          <span class="dTab" aria-selected="true">📋 Tugasan Saya</span>
+          <span class="dTab" aria-selected="false">🔒 Admin</span>
+        </div>
+        <div class="dBody">
+          <div class="dCard">
+            <div class="dLbl">Siapa anda?</div>
+            <div class="dSel">Aisyah</div>
+          </div>
+          <div class="dCard">
+            <div class="dTop"><b>Hari Ini</b><span class="dChip">3/6 siap</span></div>
+            <div class="dSub">Tekan ✓ bila tugas selesai</div>
+            <div class="dTask done"><span class="tm">08:45</span><span><span class="tj">🔓 Buka kedai &amp; on semua lampu</span><span class="ms">SOP pembukaan kedai</span></span><span class="dTick">✓</span></div>
+            <div class="dTask done"><span class="tm">08:50</span><span><span class="tj">☕ On mesin kopi &amp; panaskan</span><span class="ms">Siap sebelum customer masuk</span></span><span class="dTick">✓</span></div>
+            <div class="dTask done"><span class="tm">09:00</span><span><span class="tj">💰 Kira duit float register</span><span class="ms">Rekod jumlah dalam buku</span></span><span class="dTick">✓</span></div>
+            <div class="dTask"><span class="tm">09:10</span><span><span class="tj">🪑 Susun meja &amp; lap counter</span><span class="ms">Kemas sebelum waktu puncak</span></span><span class="dTick"></span></div>
+            <div class="dTask"><span class="tm">12:30</span><span><span class="tj">🥛 Semak stok susu &amp; bekalan</span><span class="ms">Order kalau kurang</span></span><span class="dTick"></span></div>
+            <div class="dTask"><span class="tm">15:00</span><span><span class="tj">🧹 Spot check kebersihan</span><span class="ms">Toilet, lantai &amp; meja customer</span></span><span class="dTick"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="masalah">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="tag">Kenal tak situasi ni?</p>
+      <h2>Setiap pagi, cerita yang sama.</h2>
+    </div>
+    <div class="pains">
+      <div class="pain"><div class="em">😮‍💨</div><h3>"Eh, lupa la boss"</h3>
+        <p>Mesin tak dipanaskan, lampu tak buka, sampah semalam masih ada. Anda ulang arahan sama setiap hari macam pita rosak.</p></div>
+      <div class="pain"><div class="em">🤷</div><h3>"Bukan tugas saya"</h3>
+        <p>Bila ditanya siapa patut buat, semua tunjuk jari orang lain. Tiada rekod, tiada bukti, tiada tanggungjawab.</p></div>
+      <div class="pain"><div class="em">📵</div><h3>Boss = alarm bergerak</h3>
+        <p>Anda tak boleh cuti tenang sebab kedai bergantung pada ingatan anda. Bisnes patut jalan ikut sistem, bukan ikut mood.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="ciri" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="tag">Ciri-ciri</p>
+      <h2>Satu sistem, semua tugasan terkawal.</h2>
+      <p>Dibina khas untuk kedai, kafe, klinik, workshop &amp; bisnes kecil Malaysia.</p>
+    </div>
+    <div class="feats">
+      <div class="feat"><div class="ic">🔔</div><h3>Reminder Telegram Automatik</h3>
+        <p>Alarm tugasan masuk terus ke telefon staf ikut jadual — setiap hari, tanpa anda sentuh apa-apa.</p></div>
+      <div class="feat"><div class="ic">✅</div><h3>Staf Tick, Boss Nampak</h3>
+        <p>Setiap tugas siap direkod dengan masa sebenar. Notifikasi terus ke Telegram anda.</p></div>
+      <div class="feat"><div class="ic">📷</div><h3>Bukti Gambar WhatsApp</h3>
+        <p>Tugas penting boleh disertakan bukti — staf tekan satu butang, gambar terus ke WhatsApp boss.</p></div>
+      <div class="feat"><div class="ic">🔐</div><h3>PIN Setiap Staf</h3>
+        <p>Login peribadi — staf hanya nampak tugasan sendiri. Tiada tick bagi pihak orang lain.</p></div>
+      <div class="feat"><div class="ic">📱</div><h3>App Sendiri di Telefon</h3>
+        <p>Staf install macam app biasa, dengan ikon syarikat. Anda urus jadual &amp; staf terus dari telefon.</p></div>
+      <div class="feat"><div class="ic">🏆</div><h3>Data 100% Milik Anda</h3>
+        <p>Sistem dipasang atas akaun Google anda sendiri. Tiada yuran server bulanan, selamanya.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="cara">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="tag">Cara ia berfungsi</p>
+      <h2>Siap guna dalam 3 langkah.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Kami pasang untuk anda</h3>
+        <p>Setup penuh dalam sehari atas akaun Google anda — termasuk jadual SOP kedai anda &amp; latihan ringkas.</p></div>
+      <div class="step"><h3>Staf daftar 2 minit</h3>
+        <p>Staf tekan START pada bot Telegram &amp; install app. Tak perlu install software pelik — Telegram yang mereka dah ada.</p></div>
+      <div class="step"><h3>Sistem jalan sendiri</h3>
+        <p>Reminder keluar ikut masa setiap hari. Staf tick, anda pantau dari telefon. Ubah jadual bila-bila — percuma.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="demo" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="tag">Demo langsung</p>
+      <h2>Cuba sendiri — tekan ✓ pada tugasan.</h2>
+    </div>
+    <div class="demoWrap">
+      <div class="demoTxt">
+        <h3>Inilah yang staf anda guna setiap hari.</h3>
+        <p>Demo di sebelah ini berfungsi — tukar staf, tekan tick, dan buka tab Admin untuk lihat apa yang boss nampak.</p>
+        <ul>
+          <li>Setiap staf nampak senarai tugasan sendiri sahaja</li>
+          <li>Popup pengesahan sebelum direkod — tiada tersalah tekan</li>
+          <li>Setiap tick direkod dengan masa sebenar</li>
+          <li>Tab Admin: progress semua staf dalam satu skrin</li>
+        </ul>
+        <div style="margin-top:22px">
+          <a class="bigcta" href="https://wa.me/60182889932?text=Hai%20Borhan%2C%20saya%20dah%20cuba%20demo%20DYNO%20SOP%20Staf.%20Nak%20tahu%20lebih%20lanjut." target="_blank" rel="noopener" style="font-size:15px">Saya nak sistem ni →</a>
+        </div>
+      </div>
+      <div>
+        <div class="phoneFrame phoneRel">
+          <div class="dHead">
+            <img src="icons/icon-192.png" width="32" height="32" alt="" loading="lazy">
+            <div><b>DYNO SOP Staf</b><small>Tugasan &amp; reminder harian</small></div>
+          </div>
+          <div class="dTabs" role="tablist" aria-label="Paparan app">
+            <button class="dTab" role="tab" id="tabStaf" aria-controls="panStaf" aria-selected="true" onclick="dTukarTab('staf')">📋 Tugasan Saya</button>
+            <button class="dTab" role="tab" id="tabAdmin" aria-controls="panAdmin" aria-selected="false" onclick="dTukarTab('admin')">🔒 Admin</button>
+          </div>
+          <div class="dBody">
+            <div id="panStaf" role="tabpanel" aria-labelledby="tabStaf">
+              <div class="dCard">
+                <label class="dLbl" for="dStaf">Siapa anda?</label>
+                <select class="dSel" id="dStaf" onchange="dPilihStaf(this.selectedIndex)"></select>
+              </div>
+              <div class="dCard">
+                <div class="dTop"><b>Hari Ini</b><span class="dChip" id="dProg">0/0 siap</span></div>
+                <div class="dSub">Tekan ✓ bila tugas selesai</div>
+                <div id="dList"></div>
+                <button class="dReset" onclick="dReset()">↺ Reset demo</button>
+              </div>
+            </div>
+            <div id="panAdmin" role="tabpanel" aria-labelledby="tabAdmin" hidden>
+              <div class="dCard">
+                <div class="dTop"><b>Progress Hari Ini</b><span class="dChip">Live</span></div>
+                <div class="dSub">Apa yang boss nampak — semua staf, satu skrin</div>
+                <div id="dAdminList"></div>
+              </div>
+            </div>
+          </div>
+          <div class="dModal" id="dModal">
+            <div class="dBox">
+              <p id="dTeks">Anda selesai tugas ini?</p>
+              <div class="dRow">
+                <button class="dTidak" onclick="dJawab(false)">Tidak</button>
+                <button class="dYa" onclick="dJawab(true)">Ya</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="demoTag">☝️ Demo sebenar — cuba tekan!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="harga">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="tag">Harga</p>
+      <h2>Bayar sekali. Bukan setiap bulan.</h2>
+      <p>Sistem lain caj langganan bulanan selamanya. DYNO dipasang atas Google anda sendiri — sekali bayar, sistem milik anda.</p>
+    </div>
+    <div class="prices">
+      <div class="price hot">
+        <div class="pop">🦖 PAKEJ UTAMA</div>
+        <h3>Setup Custom</h3>
+        <div class="amt">RM199 <small>sekali sahaja</small></div>
+        <p class="note">Dipasang khas atas akaun Google bisnes anda</p>
+        <ul>
+          <li>Pemasangan penuh dalam 1 hari</li>
+          <li>Bot Telegram dengan nama bisnes anda</li>
+          <li>App staf berjenama, boleh install di telefon</li>
+          <li>Jadual SOP anda dimasukkan siap-siap</li>
+          <li>Latihan boss &amp; staf termasuk</li>
+          <li>Staf tanpa had — tiada caj per kepala</li>
+          <li>Tiada yuran server bulanan, selamanya</li>
+        </ul>
+        <a class="bigcta" href="https://wa.me/60182889932?text=Hai%20Borhan%2C%20saya%20nak%20pakej%20Setup%20RM199%20DYNO%20SOP%20Staf." target="_blank" rel="noopener">Tempah Sekarang — RM199</a>
+      </div>
+      <div class="price">
+        <h3>Sokongan &amp; Kemas Kini</h3>
+        <div class="amt">RM99 <small>/ tahun</small></div>
+        <p class="note">Pilihan — untuk ketenangan fikiran</p>
+        <ul>
+          <li>Sokongan WhatsApp keutamaan</li>
+          <li>Kemas kini sistem &amp; ciri baru percuma</li>
+          <li>Bantuan tambah staf &amp; ubah jadual</li>
+          <li>Semakan sistem berkala</li>
+          <li>Bantuan segera jika ada masalah</li>
+        </ul>
+        <a class="ghost" href="https://wa.me/60182889932?text=Hai%20Borhan%2C%20saya%20berminat%20dengan%20pakej%20Sokongan%20RM99%2Ftahun." target="_blank" rel="noopener">Tambah Sokongan</a>
+      </div>
+    </div>
+    <p class="jimters">Bandingkan: software langganan biasa RM99–299 <b>sebulan</b> = RM1,188–3,588 setahun.<br>
+    DYNO: <b>RM199 sekali</b> (+ RM99/tahun kalau nak sokongan). Kira sendiri jimatnya. 😉</p>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="tag">Soalan lazim</p>
+      <h2>Ada soalan? Ini jawapannya.</h2>
+    </div>
+    <div class="faqs">
+      <details>
+        <summary>Kenapa tiada yuran bulanan? Apa habuannya?</summary>
+        <p>Sebab sistem dipasang atas akaun Google anda sendiri (percuma dari Google) dan reminder guna Telegram (percuma). Tiada server kami yang anda perlu sewa. Kami untung dari yuran setup &amp; sokongan tahunan pilihan — bukan dari mengikat anda dengan langganan.</p>
+      </details>
+      <details>
+        <summary>Data saya selamat? Siapa punya?</summary>
+        <p>100% milik anda. Semua data (staf, jadual, rekod) duduk dalam Google Sheet akaun anda sendiri — bukan server orang lain. Kalau berhenti guna khidmat kami pun, sistem anda terus berjalan.</p>
+      </details>
+      <details>
+        <summary>Staf saya bukan orang IT. Susah tak nak guna?</summary>
+        <p>Kalau mereka boleh guna WhatsApp, mereka boleh guna ini. Staf cuma tekan START pada bot Telegram sekali, dan tekan ✓ dalam app bila tugas siap. Latihan ringkas termasuk dalam pakej setup.</p>
+      </details>
+      <details>
+        <summary>Berapa ramai staf boleh guna?</summary>
+        <p>Tanpa had, tanpa caj tambahan. 3 staf atau 30 staf — harga sama.</p>
+      </details>
+      <details>
+        <summary>Telefon jenis apa yang disokong?</summary>
+        <p>Semua — Android, iPhone, termasuk Huawei/Honor tanpa Google Play. Selagi ada Telegram dan browser, boleh guna.</p>
+      </details>
+      <details>
+        <summary>Berapa lama masa pemasangan?</summary>
+        <p>Biasanya siap dalam sehari. Anda sediakan senarai staf &amp; jadual SOP, kami uruskan yang lain, dan sistem hidup petang tu juga.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Berhenti jadi alarm bergerak.<br>Biar sistem yang kerja.</h2>
+    <p>WhatsApp kami sekarang untuk demo percuma — kami tunjukkan sistem sebenar yang sedang berjalan.</p>
+    <a class="bigcta" href="https://wa.me/60182889932?text=Hai%20Borhan%2C%20saya%20nak%20demo%20percuma%20DYNO%20SOP%20Staf." target="_blank" rel="noopener">💬 WhatsApp: 018-288 9932</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img src="icons/icon-192.png" width="38" height="38" alt="Logo DYNO SOP Staf" loading="lazy">
+    <p><b style="color:var(--txt)">DYNO SOP Staf</b> — Sistem Tugasan &amp; Reminder Automatik</p>
+    <p style="margin-top:6px">Borhan · <a href="https://wa.me/60182889932">WhatsApp 018-288 9932</a> · Malaysia 🇲🇾</p>
+  </div>
+</footer>
+
+<a class="waFloat" href="https://wa.me/60182889932?text=Hai%20Borhan%2C%20saya%20berminat%20dengan%20DYNO%20SOP%20Staf." target="_blank" rel="noopener" aria-label="Hubungi kami di WhatsApp">💬 WhatsApp</a>
+
+<script>
+// ===== Demo interaktif =====
+var dStafData = [
+  { nama:'Aisyah', tugas:[
+    {masa:'08:45', tajuk:'🔓 Buka kedai & on semua lampu', ms:'SOP pembukaan kedai', done:true},
+    {masa:'08:50', tajuk:'☕ On mesin kopi & panaskan',    ms:'Siap sebelum customer masuk', done:true},
+    {masa:'09:00', tajuk:'💰 Kira duit float register',    ms:'Rekod jumlah dalam buku', done:true},
+    {masa:'09:10', tajuk:'🪑 Susun meja & lap counter',    ms:'Kemas sebelum waktu puncak', done:false},
+    {masa:'12:30', tajuk:'🥛 Semak stok susu & bekalan',   ms:'Order kalau kurang', done:false},
+    {masa:'15:00', tajuk:'🧹 Spot check kebersihan',       ms:'Toilet, lantai & meja customer', done:false}
+  ]},
+  { nama:'Hafiz', tugas:[
+    {masa:'09:00', tajuk:'📦 Terima & semak stok masuk', ms:'Padan dengan invois', done:true},
+    {masa:'11:00', tajuk:'🧊 Semak suhu chiller',        ms:'Rekod bacaan dalam log', done:false},
+    {masa:'14:00', tajuk:'🗑️ Buang sampah & tukar bag',  ms:'Semua tong dalam kedai', done:false},
+    {masa:'17:30', tajuk:'🔐 Tutup kedai & kunci',       ms:'SOP penutupan kedai', done:false}
+  ]},
+  { nama:'Nurul', tugas:[
+    {masa:'08:30', tajuk:'🧾 Print laporan jualan semalam', ms:'Hantar ke boss', done:true},
+    {masa:'10:00', tajuk:'📱 Balas mesej customer',         ms:'WhatsApp & Instagram', done:true},
+    {masa:'13:00', tajuk:'💳 Semak transaksi POS',          ms:'Padan dengan duit cash', done:false},
+    {masa:'16:00', tajuk:'📊 Update stok dalam sistem',     ms:'Barang masuk & keluar', done:false},
+    {masa:'18:00', tajuk:'🧮 Tutup akaun harian',           ms:'Rekod dalam Google Sheet', done:false}
+  ]}
+];
+
+// Salinan asal untuk butang reset
+var dAsal = JSON.parse(JSON.stringify(dStafData));
+var dAktif = 0, dPilih = -1;
+
+function dEsc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function dIsiStaf(){
+  document.getElementById('dStaf').innerHTML =
+    dStafData.map(function(s){ return '<option>' + dEsc(s.nama) + '</option>'; }).join('');
+}
+
+function dRender(){
+  var tugas = dStafData[dAktif].tugas;
+  document.getElementById('dList').innerHTML = tugas.map(function(t, i){
+    return '<div class="dTask' + (t.done ? ' done' : '') + '">' +
+      '<span class="tm">' + dEsc(t.masa) + '</span>' +
+      '<span><span class="tj">' + dEsc(t.tajuk) + '</span>' +
+      '<span class="ms">' + dEsc(t.ms) + '</span></span>' +
+      '<button class="dTick" aria-label="Tanda siap: ' + dEsc(t.tajuk) + '" onclick="dTanda(' + i + ')">' +
+      (t.done ? '✓' : '') + '</button></div>';
+  }).join('');
+
+  var siap = tugas.filter(function(t){ return t.done; }).length;
+  document.getElementById('dProg').textContent = siap + '/' + tugas.length + ' siap';
+
+  document.getElementById('dAdminList').innerHTML = dStafData.map(function(s){
+    var d = s.tugas.filter(function(t){ return t.done; }).length;
+    var pct = Math.round(d / s.tugas.length * 100);
+    return '<div class="dAdmin"><span class="an">' + dEsc(s.nama) + '</span>' +
+      '<span class="dBar"><i style="width:' + pct + '%"></i></span>' +
+      '<span class="ap">' + d + '/' + s.tugas.length + '</span></div>';
+  }).join('');
+}
+
+function dPilihStaf(i){ dAktif = i; dRender(); }
+
+function dTukarTab(which){
+  var staf = which === 'staf';
+  document.getElementById('panStaf').hidden = !staf;
+  document.getElementById('panAdmin').hidden = staf;
+  document.getElementById('tabStaf').setAttribute('aria-selected', staf);
+  document.getElementById('tabAdmin').setAttribute('aria-selected', !staf);
+}
+
+function dTanda(i){
+  dPilih = i;
+  var t = dStafData[dAktif].tugas[i];
+  document.getElementById('dTeks').textContent = t.done
+    ? 'Batalkan tanda siap untuk "' + t.tajuk + '"? Boss akan dimaklumkan.'
+    : 'Anda selesai tugas "' + t.tajuk + '"?';
+  document.getElementById('dModal').classList.add('on');
+}
+
+function dJawab(ya){
+  document.getElementById('dModal').classList.remove('on');
+  if (ya && dPilih >= 0){
+    var t = dStafData[dAktif].tugas[dPilih];
+    t.done = !t.done;
+    dRender();
+  }
+  dPilih = -1;
+}
+
+function dReset(){
+  dStafData = JSON.parse(JSON.stringify(dAsal));
+  dRender();
+}
+
+dIsiStaf();
+dRender();
+</script>
+</body>
+</html>
