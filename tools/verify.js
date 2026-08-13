@@ -125,6 +125,30 @@ const ok = (c, m) => out.push(`${c ? 'PASS' : 'FAIL'}  ${m}`);
 
   ok(errors.length === 0, 'no JS errors' + (errors.length ? ': ' + errors.join('; ') : ''));
 
+  // --- Link tracking: ?ref= must ride along into the WhatsApp message ---
+  const waTexts = async pg => pg.locator('a[href*="wa.me/"]').evaluateAll(
+    els => els.map(e => decodeURIComponent(new URL(e.href).searchParams.get('text') || '')));
+
+  ok((await waTexts(page)).every(t => !t.includes('(dari:')),
+     'no ref tag on WhatsApp links when none is given');
+
+  const tagged = await browser.newPage();
+  await tagged.goto(url + '?ref=fb', { waitUntil: 'networkidle' });
+  const tags = await waTexts(tagged);
+  ok(tags.length > 0 && tags.every(t => t.includes('(dari: fb)')),
+     `every WhatsApp link carries the ref (${tags.length} links)`);
+
+  await tagged.goto(url + '?utm_source=ig', { waitUntil: 'networkidle' });
+  ok((await waTexts(tagged)).every(t => t.includes('(dari: ig)')), 'utm_source works too');
+
+  // a ref from the URL is untrusted input — it must be sanitised, not injected
+  await tagged.goto(url + '?ref=' + encodeURIComponent('<img src=x onerror=alert(1)>'),
+                    { waitUntil: 'networkidle' });
+  const dirty = await waTexts(tagged);
+  ok(dirty.every(t => !/[<>"']/.test(t)), 'hostile ref value is stripped of markup');
+  ok((await tagged.locator('script').count()) === (await page.locator('script').count()),
+     'hostile ref injects no new script element');
+
   // --- Mobile: the hero phone is what a prospect taps first ---
   const m = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   await m.goto(url, { waitUntil: 'networkidle' });

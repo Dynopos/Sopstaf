@@ -632,7 +632,7 @@
   <div class="wrap">
     <h2>Berhenti jadi alarm bergerak.<br>Biar sistem yang kerja.</h2>
     <p>Dah cuba demo di atas? WhatsApp kami — kami terangkan macam mana ia dipasang untuk bisnes anda.</p>
-    <a class="bigcta" href="https://wa.me/60182889932?text=Hai%20Borhan%2C%20saya%20nak%20tahu%20lebih%20lanjut%20pasal%20DYNO%20SOP%20Staf." target="_blank" rel="noopener">💬 WhatsApp: 018-288 9932</a>
+    <a class="bigcta" href="https://wa.me/60182889932?text=Hai%20Borhan%2C%20saya%20nak%20tahu%20lebih%20lanjut%20pasal%20DYNO%20SOP%20Staf." target="_blank" rel="noopener">💬 WhatsApp: 018-2889932</a>
   </div>
 </section>
 
@@ -640,7 +640,7 @@
   <div class="wrap">
     <img src="icons/icon-192.png" width="38" height="38" alt="Logo DYNO SOP Staf" loading="lazy">
     <p><b style="color:var(--txt)">DYNO SOP Staf</b> — Sistem Tugasan &amp; Reminder Automatik</p>
-    <p style="margin-top:6px">Borhan · <a href="https://wa.me/60182889932">WhatsApp 018-288 9932</a> · Malaysia 🇲🇾</p>
+    <p style="margin-top:6px">Borhan · <a href="https://wa.me/60182889932">WhatsApp 018-2889932</a> · Malaysia 🇲🇾</p>
   </div>
 </footer>
 
@@ -780,6 +780,33 @@ document.addEventListener('change', function(e){
 });
 
 dRender();
+
+// ===== Jejak sumber pautan =====
+// Buka halaman dengan ?ref=fb (atau ?utm_source=fb) dan setiap pautan WhatsApp
+// pada halaman akan bawa tag itu dalam mesej, jadi bila prospek WhatsApp masuk,
+// kita terus nampak dia datang dari saluran mana. Tiada cookie, tiada pihak ketiga.
+function dTagWhatsApp(){
+  var ref = '';
+  try {
+    var q = new URLSearchParams(location.search);
+    ref = q.get('ref') || q.get('utm_source') || sessionStorage.getItem('dref') || '';
+  } catch (e) {}
+
+  ref = String(ref).replace(/[^a-z0-9_-]/gi, '').slice(0, 24);   // bersihkan input URL
+  if (!ref) return;
+
+  try { sessionStorage.setItem('dref', ref); } catch (e) {}
+
+  Array.prototype.slice.call(document.querySelectorAll('a[href*="wa.me/"]')).forEach(function(a){
+    var u;
+    try { u = new URL(a.href); } catch (e) { return; }
+    var teks = u.searchParams.get('text') || '';
+    if (teks.indexOf('(dari:') !== -1) return;
+    u.searchParams.set('text', (teks + ' (dari: ' + ref + ')').trim());
+    a.href = u.toString();
+  });
+}
+dTagWhatsApp();
 </script>
 </body>
 </html>
