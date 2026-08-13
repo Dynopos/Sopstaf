@@ -62,6 +62,7 @@ const ok = (c, m) => out.push(`${c ? 'PASS' : 'FAIL'}  ${m}`);
   // The page must not promise a live demo that does not exist
   const body = await page.locator('body').innerText();
   ok(!/demo percuma/i.test(body), 'no "demo percuma" promise');
+  ok(!/\b(1 hari|satu hari|sehari)\b/i.test(body), 'no one-day installation promise');
 
   // Images must be dimensioned + described
   const imgs = await page.locator('img').evaluateAll(els =>
