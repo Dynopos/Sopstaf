@@ -92,3 +92,12 @@ Perlu dibuat di luar kod:
   `Organization` sahaja sebab tiada alamat)
 - Kumpul review Google untuk sokong local SEO
 - Pantau Search Console & kekalkan kandungan segar
+
+## Cadangan modul baharu
+
+[`docs/modul-kpi/`](docs/modul-kpi/) — cadangan reka bentuk untuk **modul KPI,
+prestasi & bonus staf**: spesifikasi fungsi, model data, formula pengiraan, pelan
+pembinaan dan senarai keputusan yang perlu dibuat sebelum coding bermula.
+
+Status: cadangan sahaja — belum diluluskan, belum dibina, dan belum menyentuh
+landing page ini.
