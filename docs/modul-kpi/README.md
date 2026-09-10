@@ -1,7 +1,12 @@
 # Modul KPI, Prestasi & Bonus Staf — Cadangan Sistem
 
 Dokumen kerja untuk menambah **modul KPI** ke dalam produk DYNO SOP Staf.
-Status: **cadangan reka bentuk** — belum diluluskan, belum dibina.
+
+Status: **Fasa 1 sudah dibina** — aplikasi Laravel dalam [`../../kpi/`](../../kpi/),
+70 ujian hijau. Keputusan K1–K14 di bawah dilaksanakan mengikut cadangan dalam
+`05`; semuanya boleh diubah dari skrin Tetapan tanpa menyentuh kod. Keputusan
+rasmi management masih diperlukan — jika mana-mana berbeza, tukar tetapan, bukan
+kod.
 
 Modul ini menambah pada apa yang SOPSTAF buat sekarang (SOP + reminder + tick):
 rekod jualan harian, penilaian prestasi berwajaran, pengiraan bonus, leaderboard,
@@ -54,6 +59,17 @@ bonus KPI individu + insentif jualan tinggi + bonus KPI team.
 
 **Workflow** — `Draft → Submitted → Approved → Locked`, dengan `Reopened` yang
 hanya boleh dibuka oleh Admin dan sentiasa meninggalkan jejak audit.
+
+## Apa yang sudah dibina (Fasa 1)
+
+Log masuk tiga peranan · profil staf · kemasukan jualan harian dan rekod
+pelarasan · rumusan bulanan dengan markah jualan automatik · borang penilaian 25
+item dengan catatan wajib pada skor 0 · workflow penuh dengan penguncian tempoh ·
+pengiraan bonus, insentif dan bonus team dengan snapshot konfigurasi ·
+leaderboard · papan pemuka staf dan management · audit trail sisip sahaja ·
+skrin tetapan.
+
+Arahan menjalankannya ada dalam [`../../kpi/CLAUDE.md`](../../kpi/CLAUDE.md).
 
 ## Tiga perkara yang perlu diputuskan awal
 

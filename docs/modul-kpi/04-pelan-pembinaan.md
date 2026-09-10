@@ -72,7 +72,7 @@ Keputusan ini perlu dibuat sebelum sebarang kod ditulis — lihat `05 §K14`.
 | Lapisan | Pilihan | Sebab |
 |---|---|---|
 | Rangka kerja | Laravel | Kebenaran, migrasi, ujian, jadual tugasan sudah terbina |
-| Antara muka | Livewire + Blade | Satu bahasa; borang penilaian 25 item adalah kerja borang, bukan SPA |
+| Antara muka | Blade | Lihat nota di bawah |
 | Pangkalan data | MySQL 8 | Kekangan unik & transaksi yang skema ini bergantung padanya |
 | Kebenaran | Dasar Laravel per model | Penguatkuasaan di pelayan, bukan menyembunyikan butang |
 | Audit | Pendengar peristiwa model → `audit_logs` | Sisip sahaja, seragam |
@@ -82,6 +82,19 @@ Keputusan ini perlu dibuat sebelum sebarang kod ditulis — lihat `05 §K14`.
 
 Tugasan berjadual yang diperlukan: buka tempoh bulanan, peringatan penilaian
 tertunggak, kira semula rumusan cache jika digunakan.
+
+**Nota daripada pembinaan sebenar.** Livewire dicadangkan pada mulanya untuk
+jumlah markah yang berubah secara langsung pada borang 25 item. Semasa dibina,
+Blade biasa dengan sedikit JavaScript inline memberi hasil yang sama tanpa
+menambah dependency, dan ia sepadan dengan produk sedia ada yang memang tiada
+dependency runtime. Jumlah markah dirender di pelayan dahulu, kemudian dikemas
+kini secara langsung jika JavaScript berjalan — jadi angka tetap betul walaupun
+skrip tidak dimuat.
+
+Satu lajur ditambah kepada reka bentuk asal: `staff.is_assessed`. Tidak semua
+orang dalam senarai gaji diukur dengan KPI jualan — Supervisor menguruskan kedai
+tanpa target jualan sendiri, dan tanpa lajur ini dia muncul di leaderboard pada
+RM0.
 
 ## 4. Fasa
 
